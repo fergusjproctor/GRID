@@ -395,7 +395,7 @@ def main():
     ckpt_callback = ModelCheckpoint(save_top_k=1, 
                                     monitor="val_total_acc",
                                     mode="max", 
-                                    every_n_epochs = 25, 
+                                    every_n_epochs = 2, 
                                     filename='{epoch:02d}')
 
     # Create Profiler
@@ -406,8 +406,9 @@ def main():
                         accelerator=args_.accelerator, 
                         devices=args_.gpu_devices, 
                         logger=logger, 
-                        callbacks=[lr_monitor, ckpt_callback],
-                        strategy='ddp_find_unused_parameters_true')
+                        callbacks=[lr_monitor, ckpt_callback]
+                        #strategy='ddp_find_unused_parameters_true'
+                        )
 
     if args_.fit_flag: # train mode
         if args_.from_ckpt_flag:

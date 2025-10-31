@@ -1,0 +1,36 @@
+{
+  "configurations": [
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Train Model",
+      "program": "${workspaceFolder}/train.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Preprocess Data",
+      "program": "${workspaceFolder}/run_preprocess_data.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "args": ["--gpu_devices", "${input:gpuDevice}"]
+    },
+    {
+      "type": "debugpy",
+      "request": "launch",
+      "name": "Run Evaluation",
+      "program": "${workspaceFolder}/run_evaluation.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "gpuDevice",
+      "description": "Enter GPU device number (e.g., 0)"
+    }
+  ]
+}

@@ -187,8 +187,11 @@ def load_data_hierarachy(data_path)->dict:
             path = os.path.join(data_path, graph_dir)
             if os.path.isdir(path):
                 scene_id = int(graph_dir.split('.')[1])
+                
                 # graph_dir_sorted = sorted(graph_dir, key=sort_rg)
                 for graph_name in os.listdir(path):
+                    if graph_name.startswith('.'):
+                        continue
                     if (graph_name.split('.')[4] == 'rg'):
                         graph_id = int(graph_name.split('.')[5])
                         instr_id = int(graph_name.split('.')[3])

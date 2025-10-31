@@ -231,7 +231,15 @@ class data_preprocessor():
         raw_data_path = []
         
         count_len_data = 0
-        scene_ids = [int(f.path.split('.')[1]) for f in os.scandir(self.data_path) if f.is_dir()]
+        print(os.scandir(self.data_path))
+        #scene_ids = [int(f.path.split('.')[1]) for f in os.scandir(self.data_path) if f.is_dir()]
+        scene_ids = [
+    int(os.path.basename(f.path).split('.')[1])
+    for f in os.scandir(self.data_path)
+    if f.is_dir() and not os.path.basename(f.path).startswith('.')
+       and os.path.basename(f.path).count('.') >= 1
+]
+
         scene_ids.sort()
         break_outer_loop = False
         # Iterate through scenes

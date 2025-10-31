@@ -108,7 +108,7 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def parse_gpu_devices(input):
-    if input == 'auto':
+    if input == 'cpu' or input == 'auto' or input == 'mps':
         return input
     numbers = input.split(',')
     parsed_numbers = []
@@ -158,6 +158,7 @@ def trainer_parser(parser):
     if args.from_ckpt_flag:
         assert args.ckpt_path, "Check point path must be specified" 
         assert os.path.exists(args.ckpt_path), f"Check point path is not valid. ckpt_path: {args.ckpt_path}" 
+        
         # overwrite configuration file to f'../../{ckpt_path}'
         # config_path = os.path.dirname(os.path.dirname(args.ckpt_path))+'/hparams.yaml'
         config_path = os.path.dirname(os.path.dirname(args.ckpt_path))+'/hparams.cfg'
@@ -199,8 +200,12 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
     
     # ADD SHARED ARGS
     parser.add_argument('--accelerator',
-                        default='gpu',
-                        type=str)
+                        metavar='N',
+                        type=parse_gpu_devices,
+                        default='auto'
+                        #default='gpu',
+                        #type=str
+                        )
     # python arg.py --gpu_devices 0,1
     parser.add_argument('--gpu_devices', 
                         metavar='N',

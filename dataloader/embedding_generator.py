@@ -13,7 +13,11 @@ class embedding_generator():
         # Text Encoder
         self.lm = INSTRUCTOR(self.config.text_encoder_type)
         self.batch_size = self.config.batch_size
-        self.device = self.arg.gpu_devices[0]
+        self.device = self.arg.gpu_devices
+        # see what device we have
+        print(f"Using device: {self.arg.gpu_devices}")
+   
+
         return
     
     def generate_embeddings(self, input_tokens:dict, output_value:str=None, show_progress_bar:bool=True, progress_bar_desc:str=None, position=0):
@@ -28,6 +32,7 @@ class embedding_generator():
         Returns:
             _type_: _description_
         """        
+        print(self.device)
         for key in input_tokens.keys():
             input_tokens[key] = input_tokens[key].to(self.device)
         return self.lm.encode_tokens(tokens=input_tokens,
