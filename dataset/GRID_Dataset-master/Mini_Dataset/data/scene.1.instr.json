@@ -1,0 +1,84 @@
+{
+    "commands": [
+        {
+            "id": 0,
+            "type": "move_place_to_finish",
+            "low": [
+                "move freestanding rack 12",
+                "place_to freestanding rack 12",
+                "finish floor 0"
+            ],
+            "high": "Your goal is to get the object to the pink freestanding rack."
+        },
+        {
+            "id": 1,
+            "type": "move_place_to_finish",
+            "low": [
+                "move bookcase 8",
+                "place_to bookcase 8",
+                "finish floor 0"
+            ],
+            "high": "Please proceed to the blue bookcase with the object."
+        },
+        {
+            "id": 2,
+            "type": "move_place_to_finish",
+            "low": [
+                "move file organizer 10",
+                "place_to file organizer 10",
+                "finish floor 0"
+            ],
+            "high": "The task at hand is to move to red file organizer and leave the object there."
+        },
+        {
+            "id": 3,
+            "type": "move_place_to_finish",
+            "low": [
+                "move desk 37",
+                "place_to desk 37",
+                "finish floor 0"
+            ],
+            "high": "Your mission is to move to purple desk and deposit the object."
+        },
+        {
+            "id": 4,
+            "type": "move_place_to_finish",
+            "low": [
+                "move box 34",
+                "place_to box 34",
+                "finish floor 0"
+            ],
+            "high": "Could you transport the object to brown box?"
+        },
+        {
+            "id": 5,
+            "type": "move_place_to_finish",
+            "low": [
+                "move basket 13",
+                "place_to basket 13",
+                "finish floor 0"
+            ],
+            "high": "Shift the object to the green basket."
+        },
+        {
+            "id": 6,
+            "type": "move_place_to_finish",
+            "low": [
+                "move bar stool 23",
+                "place_to bar stool 23",
+                "finish floor 0"
+            ],
+            "high": "You need to head over to white bar stool and place the object there."
+        },
+        {
+            "id": 7,
+            "type": "move_place_to_finish",
+            "low": [
+                "move bench 27",
+                "place_to bench 27",
+                "finish floor 0"
+            ],
+            "high": "We need to move the object to the red bench."
+        }
+    ]
+}
