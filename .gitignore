@@ -85,11 +85,11 @@ target/
 
 
 *.h5
-*.pt
-*.pth
+.pt
+.pth
 #dataset/
 logs/
 lightning_logs/
 ckpt/
 USE/
-preprocess_data/
+#preprocess_data/
