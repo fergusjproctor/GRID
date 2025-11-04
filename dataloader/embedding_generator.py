@@ -11,6 +11,7 @@ class embedding_generator():
         self.output_filename = outputfile
 
         # Text Encoder
+        print(self.config.text_encoder_type)
         self.lm = INSTRUCTOR(self.config.text_encoder_type)
         self.batch_size = self.config.batch_size
         self.device = self.arg.gpu_devices
