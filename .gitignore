@@ -92,4 +92,4 @@ logs/
 lightning_logs/
 ckpt/
 USE/
-#preprocess_data/
+preprocess_data/
