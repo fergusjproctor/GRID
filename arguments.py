@@ -201,7 +201,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
     # ADD SHARED ARGS
     parser.add_argument('--accelerator',
                         metavar='N',
-                        default='gpu',
+                        default='auto',
                         type=str
                         )
     # python arg.py --gpu_devices 0,1
@@ -209,7 +209,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
                         metavar='N',
                         help='<Optional> Set gpu devices, default is "auto". Example: --gpu_devices 0,1', 
                         type=parse_gpu_devices,
-                        default='auto'
+                        default='cuda'
                         )
     parser.add_argument('--data_path', 
                         type=str, 
