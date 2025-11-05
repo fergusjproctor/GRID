@@ -1,0 +1,74 @@
+{
+    "commands": [
+        {
+            "id": 0,
+            "type": "move_place_to_finish",
+            "low": [
+                "move washstand 6",
+                "place_to washstand 6",
+                "finish floor 0"
+            ],
+            "high": "Kindly move to the red washstand and place the object."
+        },
+        {
+            "id": 1,
+            "type": "move_place_to_finish",
+            "low": [
+                "move conference table 23",
+                "place_to conference table 23",
+                "finish floor 0"
+            ],
+            "high": "Our next step is to move the object to the yellow conference table."
+        },
+        {
+            "id": 2,
+            "type": "move_place_to_finish",
+            "low": [
+                "move bar stool 15",
+                "place_to bar stool 15",
+                "finish floor 0"
+            ],
+            "high": "I need you to move to the purple bar stool and place the object there."
+        },
+        {
+            "id": 3,
+            "type": "move_place_to_finish",
+            "low": [
+                "move ottoman 37",
+                "place_to ottoman 37",
+                "finish floor 0"
+            ],
+            "high": "Can you take the object to the black ottoman?"
+        },
+        {
+            "id": 4,
+            "type": "move_place_to_finish",
+            "low": [
+                "move bean bag 32",
+                "place_to bean bag 32",
+                "finish floor 0"
+            ],
+            "high": "Let's place the object at the white bean bag."
+        },
+        {
+            "id": 5,
+            "type": "move_place_to_finish",
+            "low": [
+                "move bed 18",
+                "place_to bed 18",
+                "finish floor 0"
+            ],
+            "high": "Your goal is to get the object to the black bed."
+        },
+        {
+            "id": 6,
+            "type": "move_place_to_finish",
+            "low": [
+                "move washstand 6",
+                "place_to washstand 6",
+                "finish floor 0"
+            ],
+            "high": "The task at hand is to move to red washstand and leave the object there."
+        }
+    ]
+}
