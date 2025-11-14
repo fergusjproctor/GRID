@@ -93,3 +93,4 @@ lightning_logs/
 ckpt/
 USE/
 preprocess_data/
+.ckpt
