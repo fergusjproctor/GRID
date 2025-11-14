@@ -88,7 +88,7 @@ target/
 .pt
 .pth
 #dataset/
-logs/
+#logs/
 lightning_logs/
 ckpt/
 USE/
