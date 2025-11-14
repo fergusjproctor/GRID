@@ -4,7 +4,7 @@ from utils.get_accuracy import *
 raw_data_path_ = 'dataset/GRID_Dataset-master/Mini_Dataset/data'
 # the directory where we put the excel files: accuracy.xlsx, sub_task_label.xslx
 # usually found in the prediction log path: logs/{experiment name}/version_{version_number}
-output_root_path_ = 'logs/test/version_40'
+output_root_path_ = 'logs/test/version_18'
 
 assert raw_data_path_, f'variable <raw_data_path_> variable cannot be empty'
 assert output_root_path_, f'variable <output_root_path_> variable cannot be empty'
