@@ -175,6 +175,8 @@ def trainer_parser(parser):
         
     return args, config
 
+
+
 def print_args(args):
     # Print the values
     logger.debug('##############Parsing arguments:##############')
@@ -201,7 +203,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
     # ADD SHARED ARGS
     parser.add_argument('--accelerator',
                         metavar='N',
-                        default='gpu',
+                        default='auto',
                         type=str
                         )
     # python arg.py --gpu_devices 0,1
@@ -215,6 +217,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
                         type=str, 
                         default='dataset',
                         help='The path of the raw dataset')
+    
     parser.add_argument('--config_path',
                         default='hparams.cfg',
                         type=str,

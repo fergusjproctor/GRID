@@ -15,6 +15,18 @@ sys.path.append("..")
 from .categories import categories
 from .dataloader_tokenize import tokenizer
 from .embedding_generator import embedding_generator
+from .categories import categories as categories_
+from .categories import actions as actions_
+
+def get_dict(input_list:list)->dict:
+    assert isinstance(input_list, list), "input_list must be a list."
+    # Assign empty string as the first element
+    output_dict = {"": 0}
+    # Assign keys from input_list, this avoids the repeated assignment
+    output_dict.update(dict.fromkeys(input_list))
+    # Assign values according to the index of the key
+    output_dict = {key:idx for idx,key in enumerate(output_dict.keys())}
+    return output_dict
 
 class InstructSG():
     def __init__(self, config, data_path: str, process_node_feature_method:str=None) -> None:
@@ -35,9 +47,13 @@ class InstructSG():
         self.max_sequence_length = config.max_sequence_length
         
         # set types of action, color, objects
-        self.action_list = ['move', 'pick', 'place_to', 'finish']
-        self.color_dict = {"": 0, "red": 1, "green": 2, "blue": 3}
-        self.object_dict = self._get_category()
+        #self.action_list = ['move', 'pick', 'place_to', 'finish']
+        #self.color_dict = {"": 0, "red": 1, "green": 2, "blue": 3}
+        #self.object_dict = self._get_category()
+
+        self.action_list = list(actions_.keys())
+        self.color_dict = get_dict(categories_['color'])
+        self.object_dict = get_dict(categories_['label'])
         
         # set the method node features is processed by 
         process_node_feature_keys = ['sentence', 'onehot', 'tokenize']
@@ -168,7 +184,7 @@ class InstructSG():
         object_id_mask = []
         count_len_data = 0
 
-        scene_ids = [f.path.split('.')[1] for f in os.scandir(self.data_path) if f.is_dir()]
+        scene_ids = [f.path.split('.')[-2] for f in os.scandir(self.data_path) if f.is_dir()]
         break_outer_loop = False
         # Iterate through scenes
         # for scene_id in scene_ids:
