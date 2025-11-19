@@ -64,7 +64,7 @@ def main():
                             devices='auto'
                             )
 
-    ckpt_path = "logs/test/version_13/checkpoints/epoch=697.ckpt"
+    ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
 
 
     out = trainer.predict(model=model, dataloaders=val_loader, ckpt_path=ckpt_path, return_predictions=True)
