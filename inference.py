@@ -33,6 +33,8 @@ import logging
 from train import LitGRID, GRIDLoss
 from dataloader.categories import categories as categories_
 from dataloader.categories import actions as actions_
+from dataloader.data_preprocessor import data_preprocessor
+from arguments import create_parser
 
 
 
@@ -43,9 +45,23 @@ data_path = "./dataset/GRID_Dataset-master/Mini_Dataset/data_reduced"
 
 config_ = Config("hparams.cfg")
 
-def main():
+arg_, config_ = create_parser(type="inference", print_config_flag=True)
 
-    dataset = InstructSG(config_, data_path=data_path, process_node_feature_method='tokenize')
+def main():
+    config_.batch_size = 3
+    config_.preprocessed_language = True
+    config_.dataset_size = 3
+    #preprocessed_data_path= "preprocess_data"
+
+
+    dataset = InstructSG(arg_ ,config_, data_path=data_path, process_node_feature_method='tokenize')
+    dataset.preprocess_text(dataset.robot_graph, dataset.scene_graph, dataset.instruct)
+    
+    print(dataset.action_encoder)
+    print(dataset.object_dict)
+    print(dataset.object_id_mask)
+    
+    #dataset = InstructSG_Dataset(config=config_, data_path=preprocessed_data_path)
 
     indices = torch.arange(len(dataset))
 
@@ -54,9 +70,10 @@ def main():
     val_dataset = torch.utils.data.Subset(dataset, val_indices)
 
     val_loader = DataLoader(val_dataset, batch_size=config_.batch_size, shuffle=False, drop_last=False, num_workers=config_.num_workers)
-
+    ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
     model = LitGRID(config_)
 
+    model.load_from_checkpoint(ckpt_path, config=config_,map_location=torch.device("cpu"))
     # create trainer, which we will use only to predict
 
     trainer = pl.Trainer(max_epochs=config_.max_epoch, 
@@ -64,13 +81,26 @@ def main():
                             devices='auto'
                             )
 
-    ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
+    
+
+    batch = next(iter(val_loader))
+    out = model.predict_step(batch,0)
+    #out = trainer.predict(model=model, dataloaders=val_loader, ckpt_path=ckpt_path, return_predictions=True)
 
 
-    out = trainer.predict(model=model, dataloaders=val_loader, ckpt_path=ckpt_path, return_predictions=True)
+           # batch of 32, 10 classes
+
+    act_probs = F.softmax(out[0], dim=1)    # softmax over classes
+    act_preds = torch.argmax(act_probs, dim=1)  # shape [32], one class per sample
+
+    obj_probs = F.softmax(out[1], dim=1)    # softmax over classes
+    obj_preds = torch.argmax(obj_probs, dim=1)  # shape [32], one class per sample
+
+    print(act_preds)
+    print(obj_preds)
 
 
-    print(dataset)
+    
 
 
 

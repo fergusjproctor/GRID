@@ -133,6 +133,18 @@ def preprocessor_parser(parser):
     
     return args, config
 
+
+def inference_parser(parser):
+  
+    # Parse arguments
+    args = parser.parse_args()
+
+    # Parse configuration
+    config = Config(args.config_path)
+    
+    return args, config
+
+
 def trainer_parser(parser):
     # ADD ARGS IF YOU WISH
     parser.add_argument('--preprocessed_data_path', 
@@ -211,7 +223,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
                         metavar='N',
                         help='<Optional> Set gpu devices, default is "auto". Example: --gpu_devices 0,1', 
                         type=parse_gpu_devices,
-                        default='auto'
+                        default='mps'
                         )
     parser.add_argument('--data_path', 
                         type=str, 
@@ -227,6 +239,8 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
         args, configs = trainer_parser(parser)
     elif type == 'preprocessor':
         args, configs = preprocessor_parser(parser)
+    elif type == 'inference':
+        args, configs = inference_parser(parser)
     else:
         raise AssertionError(f'Parser type {type} not recognized')
     

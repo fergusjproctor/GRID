@@ -29,13 +29,14 @@ def get_dict(input_list:list)->dict:
     return output_dict
 
 class InstructSG():
-    def __init__(self, config, data_path: str, process_node_feature_method:str=None) -> None:
+    def __init__(self, arg, config, data_path: str, process_node_feature_method:str=None) -> None:
         '''
         data_path: the path for data loader to load datat
         process_node_feature_method: either 'sentence', 'onehot', 'tokenize'. Default 'sentence', will group the node features into one sentence. Set to 'onehot' to obtain pytorch tensor of onehot encoded node features. Set to 'tokenize' to tokenize the features, return node features as tensors
         '''
         # load class variables from function arguments
         self.config = config
+        self.arg = arg
         self.data_path = data_path
         self.len_data = self.config.dataset_size
         self.show_progress_bar = True
@@ -70,10 +71,10 @@ class InstructSG():
                                        max_node_feature_number=self.max_node_feature_number,
                                        max_seq_length=self.max_sequence_length)
 
-        # self.preprocessed_language_flag = self.config.preprocessed_language
-        # if self.preprocessed_language_flag:
-        #     self.embedding_generator = embedding_generator(config=config)
-        #     self.instruct_output_value = 'sentence_embedding'
+        self.preprocessed_language_flag = self.config.preprocessed_language
+        if self.preprocessed_language_flag:
+             self.embedding_generator = embedding_generator(arg=arg, config=config)
+             self.instruct_output_value = 'sentence_embedding'
         
         # Load data
         self._load_data()
@@ -278,57 +279,114 @@ class InstructSG():
         self.object_id_mask: np.ndarray = np.array(object_id_mask)
         return 
 
-    # def preprocess_text(self, in_rg, in_sg, in_instruct):
-    #     instruct_tokens = self.stack_dictionary(dict_list=in_instruct)
-    #     rg_tokens = self.stack_dictionary(tuple_list=in_rg)
-    #     sg_tokens = self.stack_dictionary(tuple_list=in_sg)
+    def preprocess_text(self, in_rg, in_sg, in_instruct):
+        instruct_tokens = self.stack_dictionary(dict_list=in_instruct)
+        # rg_tokens = self.stack_dictionary(tuple_list=in_rg)
+        # sg_tokens = self.stack_dictionary(tuple_list=in_sg)
+        rg_tokens = self.collate_dict(in_rg, 'node_feature')
+        sg_tokens = self.collate_dict(in_sg, 'node_feature')
 
-    #     for start_index in tqdm.trange(0, len(rg_tokens), self.config.batch_size, desc= "Batches", disable=True, leave=False):
-    #         self.robot_graph_emb = self.embedding_generator.generate_embeddings(rg_tokens[start_index:start_index+self.config.batch_size], 
-    #                                                                             show_progress_bar=self.show_progress_bar, 
-    #                                                                             progress_bar_desc='robot graph batches')
-    #         self.scene_graph_emb = self.embedding_generator.generate_embeddings(sg_tokens[start_index:start_index+self.config.batch_size], 
-    #                                                                             show_progress_bar=self.show_progress_bar, 
-    #                                                                             progress_bar_desc='scene graph batches')
-    #         self.instruct_emb = self.embedding_generator.generate_embeddings(instruct_tokens[start_index:start_index+self.config.batch_size], 
-    #                                                                         show_progress_bar=self.show_progress_bar, 
-    #                                                                         progress_bar_desc='Instruction batches')
-    #         self.instruct_emb['token_embeddings'] = self.instruct_emb['token_embeddings'].squeeze(1)
-    #         self.instruct_emb['attention_mask'] = ~self.instruct_emb['attention_mask'].bool().squeeze(1)
-    #         self.instruct_emb['sentence_embedding'] = self.instruct_emb['sentence_embedding'].squeeze(1)
+        for start_index in tqdm.trange(0, len(rg_tokens), self.config.batch_size, desc= "Batches", disable=True, leave=False):
+            self.robot_graph_emb = self.embedding_generator.generate_embeddings(rg_tokens[start_index:start_index+self.config.batch_size], 
+                                                                                show_progress_bar=self.show_progress_bar, 
+                                                                                progress_bar_desc='robot graph batches')
+            self.scene_graph_emb = self.embedding_generator.generate_embeddings(sg_tokens[start_index:start_index+self.config.batch_size], 
+                                                                                show_progress_bar=self.show_progress_bar, 
+                                                                                progress_bar_desc='scene graph batches')
+            self.instruct_emb = self.embedding_generator.generate_embeddings(instruct_tokens[start_index:start_index+self.config.batch_size], 
+                                                                            show_progress_bar=self.show_progress_bar, 
+                                                                            progress_bar_desc='Instruction batches')
+            self.instruct_emb['token_embeddings'] = self.instruct_emb['token_embeddings'].squeeze(1)
+            self.instruct_emb['attention_mask'] = ~self.instruct_emb['attention_mask'].bool().squeeze(1)
+            self.instruct_emb['sentence_embedding'] = self.instruct_emb['sentence_embedding'].squeeze(1)
         
-    #         class_idx = list(range(start_index, start_index+self.config.batch_size)) 
-    #         for index in range(0, self.config.batch_size):
-    #             sample = {'input': {   
-    #                                 'robot_graph': 
-    #                                 {   
-    #                                 'token_embeddings' :    self.robot_graph_emb['token_embeddings'][index], 
-    #                                 'attention_mask' :      self.robot_graph_emb['attention_mask'][index], 
-    #                                 'sentence_embedding':   self.robot_graph_emb['sentence_embedding'][index],
-    #                                 'edge_index':           self.robot_graph[class_idx[index]][1],
-    #                                 'edge_index_mask':      self.robot_graph[class_idx[index]][2]
-    #                                 }, 
-    #                                 'scene_graph': 
-    #                                 {
-    #                                     'token_embeddings':     self.scene_graph_emb['token_embeddings'][index], 
-    #                                     'attention_mask' :      self.scene_graph_emb['attention_mask'][index],
-    #                                     'sentence_embedding':   self.scene_graph_emb['sentence_embedding'][index],
-    #                                     'edge_index':           self.scene_graph[class_idx[index]][1],
-    #                                     'edge_index_mask':      self.scene_graph[class_idx[index]][2]
-    #                                 }, 
-    #                                 'instruct': 
-    #                                 {
-    #                                     'token_embeddings':     self.instruct_emb['token_embeddings'][index], 
-    #                                     'attention_mask' :      self.instruct_emb['attention_mask'][index],
-    #                                     'sentence_embedding':   self.instruct_emb['sentence_embedding'][index]
-    #                                 },
-    #                     'output':{
-    #                             'encoded_action': self.encoded_action[class_idx[index]].squeeze(),
-    #                             'encoded_object_id': self.encoded_object_id[class_idx[index]].squeeze(),
-    #                             'object_id_mask': self.object_id_mask[class_idx[index]].squeeze()
-    #                         }}
-    #                     }
-    #             self.embedding_generator.save(sample)
+            class_idx = list(range(start_index, start_index+self.config.batch_size)) 
+            for index in range(0, self.config.batch_size):
+                sample = {'input': {   
+                                    'robot_graph': 
+                                    {   
+                                    'token_embeddings' :    self.robot_graph_emb['token_embeddings'][index], 
+                                    'attention_mask' :      self.robot_graph_emb['attention_mask'][index], 
+                                    'sentence_embedding':   self.robot_graph_emb['sentence_embedding'][index],
+                                    'edge_index':           self.robot_graph[class_idx[index]][1],
+                                    'edge_index_mask':      self.robot_graph[class_idx[index]][2]
+                                    }, 
+                                    'scene_graph': 
+                                    {
+                                        'token_embeddings':     self.scene_graph_emb['token_embeddings'][index], 
+                                        'attention_mask' :      self.scene_graph_emb['attention_mask'][index],
+                                        'sentence_embedding':   self.scene_graph_emb['sentence_embedding'][index],
+                                        'edge_index':           self.scene_graph[class_idx[index]][1],
+                                        'edge_index_mask':      self.scene_graph[class_idx[index]][2]
+                                    }, 
+                                    'instruct': 
+                                    {
+                                        'token_embeddings':     self.instruct_emb['token_embeddings'][index], 
+                                        'attention_mask' :      self.instruct_emb['attention_mask'][index],
+                                        'sentence_embedding':   self.instruct_emb['sentence_embedding'][index]
+                                    },
+                        'output':{
+                                'encoded_action': self.encoded_action[class_idx[index]].squeeze(),
+                                'encoded_object_id': self.encoded_object_id[class_idx[index]].squeeze(),
+                                'object_id_mask': self.object_id_mask[class_idx[index]].squeeze()
+                            }}
+                        }
+                self.embedding_generator.save(sample)
+
+    @staticmethod
+    def collate_dict(input:list, position=None) -> dict:
+        """ Stack the tensors of the same fields in lists of dictionarie together
+
+        Args:
+            input (list): Either a list of dictionary or a list of tuple of dictionary to stacked
+            position (int, optional): Specify the nested component to stack
+
+        Returns:
+            stacked_dict (dict): the dictionary after stacking
+        
+        Example: 
+            input list of dictionaries with tensor fields
+            
+            input = [{'a': torch.tensor([1, 2, 3]), 'b': torch.tensor([4, 5, 6])},  
+                    {'a': torch.tensor([7, 8, 9]), 'b': torch.tensor([10, 11, 12])},  
+                    {'a': torch.tensor([13, 14, 15]), 'b': torch.tensor([16, 17, 18])}]  
+            stacked_dict = {'a': torch.tensor([[1, 2, 3], [7, 8, 9], [13, 14, 15]]),  
+                            'b': torch.tensor([[4, 5, 6], [10, 11, 12], [16, 17, 18])}
+        """        
+        # Create a defaultdict to store the stacked dictionary
+        stacked_dict = defaultdict(list)
+
+        # Stack the tensors in lists
+        if isinstance(input[0], dict):
+            if not position:
+                # stack all fields of the dictionary in the input
+                for d in input:
+                    for key, value in d.items():
+                        stacked_dict[key].append(value.unsqueeze(0))
+            else:
+                # stack all fields of the nested dictionary at the specified position of the input dictionary
+                if not isinstance(input[0][position], dict):
+                    raise AssertionError('The nested component given is not a dictionary')
+                for d in input:
+                    for key, value in d[position].items():
+                        stacked_dict[key].append(value.unsqueeze(0))
+        elif isinstance(input[0], tuple):
+            # Stack all fields of the dictionary at the given position of input tuple
+            position = position if position else 0
+            if not isinstance(input[0][position], dict):
+                raise AssertionError('The nested component given is not a dictionary')
+            for t in input:
+                for key, value in t[position].items():
+                    stacked_dict[key].append(value.unsqueeze(0))
+
+        # Concatenate the tensors along the new dimension
+        for key, value in stacked_dict.items():
+            stacked_dict[key] = torch.cat(value, dim=0)
+
+        # Convert the defaultdict to a regular dictionary
+        stacked_dict = dict(stacked_dict)
+
+        return stacked_dict
 
 
     def stack_dictionary(self, dict_list=None, tuple_list=None):
