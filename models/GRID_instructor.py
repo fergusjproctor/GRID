@@ -226,6 +226,7 @@ class GRID_instructor(nn.Module):
         concat_sg_embedding = self.graph_projector(concat_sg_embedding)
 
         # Use BiCrossAttentionModule to enhance feature
+        # TODO this seems to be padding in wrong dimension!! should be padding in n objects, from 87 to 91, but is padding along feature dimension
         graph_mask = self.graph_mask_padder(obj_mask)
         concat_sg_embedding, text_token_embeddings = self.bi_cross(x1=concat_sg_embedding, x2=text_token_embeddings, x1_mask=graph_mask, x2_mask=text_attention_mask)
 

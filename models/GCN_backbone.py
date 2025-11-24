@@ -17,8 +17,8 @@ class GCN(nn.Module):
         self.fc = nn.Linear(out_channels, out_channels)
         
     def forward(self, graph_data, instr_feature = None):#batch in data
-        batch_x=graph_data[0]
-        batch_edge_index=graph_data[1]
+        batch_x=graph_data[0] # node data
+        batch_edge_index=graph_data[1] # edge data
         batch_size = batch_x.shape[0]
         batch_results = []
 
@@ -27,10 +27,10 @@ class GCN(nn.Module):
             edge_index = batch_edge_index[i]
             if instr_feature != None:
                 instr_tensor = instr_feature[i].repeat(x.shape[0], 1)
-                x=torch.cat((x,instr_tensor), dim=1) 
+                x=torch.cat((x,instr_tensor), dim=1) # batch size x (2* sentence embedding dimension)
 
             # Apply the convolution layers
-            x = self.conv1(x, edge_index)
+            x = self.conv1(x, edge_index) # this is GAT(concat(nt, yI), e) in paper
             x = swish(x)
             x = F.dropout(x, p=0.2, training=self.training) 
 

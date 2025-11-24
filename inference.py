@@ -48,14 +48,14 @@ config_ = Config("hparams.cfg")
 arg_, config_ = create_parser(type="inference", print_config_flag=True)
 
 def main():
-    config_.batch_size = 3
+    config_.batch_size = 4
     config_.preprocessed_language = True
-    config_.dataset_size = 3
+    config_.dataset_size = 12
     #preprocessed_data_path= "preprocess_data"
 
 
     dataset = InstructSG(arg_ ,config_, data_path=data_path, process_node_feature_method='tokenize')
-    dataset.preprocess_text(dataset.robot_graph, dataset.scene_graph, dataset.instruct)
+    samples = dataset.preprocess_text(dataset.robot_graph, dataset.scene_graph, dataset.instruct)
     
     print(dataset.action_encoder)
     print(dataset.object_dict)
@@ -69,7 +69,7 @@ def main():
 
     val_dataset = torch.utils.data.Subset(dataset, val_indices)
 
-    val_loader = DataLoader(val_dataset, batch_size=config_.batch_size, shuffle=False, drop_last=False, num_workers=config_.num_workers)
+    val_loader = DataLoader(val_dataset, batch_size=config_.batch_size, shuffle=False, drop_last=False, num_workers=0)#config_.num_workers)
     ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
     model = LitGRID(config_)
 
@@ -82,7 +82,8 @@ def main():
                             )
 
     
-
+    out = trainer.predict(model=model, dataloaders=val_loader, 
+                                ckpt_path=ckpt_path)
     batch = next(iter(val_loader))
     out = model.predict_step(batch,0)
     #out = trainer.predict(model=model, dataloaders=val_loader, ckpt_path=ckpt_path, return_predictions=True)

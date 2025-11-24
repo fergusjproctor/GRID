@@ -4,4 +4,5 @@ from arguments import create_parser
 
 args_, config_ = create_parser('preprocessor') 
 processor = data_preprocessor(arg=args_, config=config_)
+args_.data_path = "dataset/GRID_Dataset-master/Mini_Dataset/data_reduced"
 processor.preprocess_from_file(data_path=args_.data_path)

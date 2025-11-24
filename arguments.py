@@ -223,7 +223,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
                         metavar='N',
                         help='<Optional> Set gpu devices, default is "auto". Example: --gpu_devices 0,1', 
                         type=parse_gpu_devices,
-                        default='mps'
+                        default='cuda'
                         )
     parser.add_argument('--data_path', 
                         type=str, 
