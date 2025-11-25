@@ -50,7 +50,7 @@ class GRID_instructor(nn.Module):
                                       batch_first=self.config.batch_first)
         
         
-        if self.config.batch_size > 1:
+        if True:#self.config.batch_size > 1: This was in code originally, but shouldn't be changing dims
             # Head
             action_hide_dim = int(math.sqrt(self.config.num_robot_node*self.config.d_model/self.config.num_action)) * self.config.num_action
             self.action_head = nn.Sequential(

@@ -76,8 +76,6 @@ class InstructSG():
              self.embedding_generator = embedding_generator(arg=arg, config=config)
              self.instruct_output_value = 'sentence_embedding'
         
-        # Load data
-        self._load_data()
         
         return
 
@@ -115,17 +113,17 @@ class InstructSG():
                                         'token_embeddings' :    self.robot_graph_emb['token_embeddings'][index].clone(), 
                                         'attention_mask' :      self.robot_graph_emb['attention_mask'][index].clone(), 
                                         'sentence_embedding':   self.robot_graph_emb['sentence_embedding'][index].clone(),
-                                        'edge_index':           self.robot_graph[index][1].clone(),
-                                        'edge_index_mask':      self.robot_graph[index][2].clone(),
-                                        'node_index_mask':      self.robot_graph[index][0]["attention_mask"].clone(),
+                                        'edge_index':           self.robot_graph[index]['edge_index'].clone(),
+                                        'edge_index_mask':      self.robot_graph[index]['edge_index_mask'].clone(),
+                                        'node_index_mask':      self.robot_graph[index]['node_index_mask'].clone()
                                     }, 
                                     'scene_graph': {
                                         'token_embeddings':     self.scene_graph_emb['token_embeddings'][index].clone(), 
                                         'attention_mask' :      self.scene_graph_emb['attention_mask'][index].clone(),
                                         'sentence_embedding':   self.scene_graph_emb['sentence_embedding'][index].clone(),
-                                        'edge_index':           self.scene_graph[index][1].clone(),
-                                        'edge_index_mask':      self.scene_graph[index][2].clone(),
-                                        'node_index_mask':      self.scene_graph[index][0]["attention_mask"].clone(),
+                                        'edge_index':           self.scene_graph[index]['edge_index'].clone(),
+                                        'edge_index_mask':      self.scene_graph[index]['edge_index_mask'].clone(),
+                                        'node_index_mask':      self.scene_graph[index]['node_index_mask'].clone()
                                     }, 
                                     'instruct': {
                                         'token_embeddings':     self.instruct_emb['token_embeddings'][index].clone(), 
@@ -169,6 +167,7 @@ class InstructSG():
     def __len__(self) -> int:
         return self.len_data
 
+    # TODO uncomment the below and use
     # def _get_action_id(self, action_name:str) ->int:
     #     '''
     #         Return an action id
@@ -181,6 +180,48 @@ class InstructSG():
     #         Return the decoded action name in string type 
     #     '''
     #     return self.action_encoder.inverse_transform(encoded_action_id)
+
+
+    def _load_input_data(self, rg_json, sg_json, cmd_h):
+        """
+        Load data from rg, sg and I given. Write to the following class variables
+                robot_graph: List[dict] 
+                scene_graph: List[dict] 
+                instruct: List[str] 
+                
+        """
+         # create action encoder
+        self.action_encoder = OneHotEncoder(categories=[self.action_list], sparse_output=False)
+        self.object_id_encoder = OneHotEncoder(sparse_output=False, categories=[[i for i in range(self.max_node_number_sg)]])
+
+        # Raw inputs
+        in_rg = []
+        in_sg = []
+        in_instruct = []
+        num_of_nodes = []
+
+        # Encode sg rg based on requirement
+        in_sg.append(self._get_graph_data(sg_json))
+        in_rg.append(self._get_graph_data(rg_json))
+
+        in_instruct.append(self.tokenizer.tokenize(cmd_h, pad_to_length=self.max_sequence_length))
+
+
+        num_of_nodes.append(len(sg_json['nodes']))
+
+        self.len_data = 1
+        # change the config if the given dataset size is zero
+        self.config.dataset_size = 1
+
+        self.num_of_nodes = num_of_nodes
+
+
+        self.robot_graph: List[Tuple[dict, torch.Tensor, torch.Tensor]] = in_rg 
+        self.scene_graph: List[Tuple[dict, torch.Tensor, torch.Tensor]] = in_sg 
+        self.instruct: List[Union[str,dict]] = in_instruct
+
+        return
+
 
     def _load_data(self) -> None:
         '''
@@ -308,13 +349,14 @@ class InstructSG():
         self.object_id_mask: np.ndarray = np.array(object_id_mask)
         return 
 
+
     def preprocess_text(self, in_rg, in_sg, in_instruct):
         instruct_tokens = self.stack_dictionary(dict_list=in_instruct)
-        rg_tokens = self.stack_dictionary(tuple_list=in_rg)
-        sg_tokens = self.stack_dictionary(tuple_list=in_sg)
-        #rg_tokens = self.collate_dict(in_rg)#, 'node_feature')
-        #sg_tokens = self.collate_dict(in_sg)#, 'node_feature')
-        samples = []
+        #rg_tokens = self.stack_dictionary(tuple_list=in_rg)
+        #sg_tokens = self.stack_dictionary(tuple_list=in_sg)
+        rg_tokens = self.collate_dict(in_rg, 'node_feature')
+        sg_tokens = self.collate_dict(in_sg, 'node_feature')
+       
 
         for start_index in tqdm.trange(0, len(in_rg), self.config.batch_size, desc= "Batches", disable=True, leave=False):
             self.robot_graph_emb = self.embedding_generator.generate_embeddings(self.batch_token(rg_tokens, start_index, self.config.batch_size), 
@@ -343,41 +385,8 @@ class InstructSG():
             self.instruct_emb['attention_mask'] = ~self.instruct_emb['attention_mask'].bool().squeeze(1)
             self.instruct_emb['sentence_embedding'] = self.instruct_emb['sentence_embedding'].squeeze(1)
         
-            class_idx = list(range(start_index, start_index+self.config.batch_size)) 
-            batch = []
-            for index in range(0, self.config.batch_size):
-                sample = {'input': {   
-                                    'robot_graph': 
-                                    {   
-                                    'token_embeddings' :    self.robot_graph_emb['token_embeddings'][index], 
-                                    'attention_mask' :      self.robot_graph_emb['attention_mask'][index], 
-                                    'sentence_embedding':   self.robot_graph_emb['sentence_embedding'][index],
-                                    'edge_index':           self.robot_graph[class_idx[index]][1],
-                                    'edge_index_mask':      self.robot_graph[class_idx[index]][2]
-                                    }, 
-                                    'scene_graph': 
-                                    {
-                                        'token_embeddings':     self.scene_graph_emb['token_embeddings'][index], 
-                                        'attention_mask' :      self.scene_graph_emb['attention_mask'][index],
-                                        'sentence_embedding':   self.scene_graph_emb['sentence_embedding'][index],
-                                        'edge_index':           self.scene_graph[class_idx[index]][1],
-                                        'edge_index_mask':      self.scene_graph[class_idx[index]][2]
-                                    }, 
-                                    'instruct': 
-                                    {
-                                        'token_embeddings':     self.instruct_emb['token_embeddings'][index], 
-                                        'attention_mask' :      self.instruct_emb['attention_mask'][index],
-                                        'sentence_embedding':   self.instruct_emb['sentence_embedding'][index]
-                                    },
-                        'output':{
-                                'encoded_action': self.encoded_action[class_idx[index]].squeeze(),
-                                'encoded_object_id': self.encoded_object_id[class_idx[index]].squeeze(),
-                                'object_id_mask': self.object_id_mask[class_idx[index]].squeeze()
-                            }}
-                        }
-                batch.append(sample)
-            samples.append(batch)
-        return samples
+
+        return 
                 #self.embedding_generator.save(sample)
 
     @staticmethod
@@ -584,12 +593,33 @@ class InstructSG():
                                     node['attributes']['color'].replace('_', ' ').strip(),
                                     node['attributes']['label'].replace('_', ' ').strip()]).strip()
                 feas.append(fea)
-            if graph_type == 'floor':
-                feas += ['']*(self.max_node_number_sg - len(feas))
-                pad_edge_flag=True
+            
+              # Get number of node of the graph before padding
+            num_node = len(feas)
+
+            # Create mask of the number of node of the graph
+            node_index_mask = torch.ones(num_node, dtype=torch.int32)
+            
             # tokenize features
             node_feature = self.tokenizer.tokenize(feas,pad_to_length=self.max_node_feature_number,return_dict=True)
             
+            
+            if graph_type == 'floor':
+                node_feature['input_ids'] = torch.cat([node_feature['input_ids'], 
+                                                       torch.zeros((self.max_node_number_sg - num_node, self.max_node_feature_number), 
+                                                                   dtype=node_feature['input_ids'].dtype)], 
+                                                       dim=0)
+                node_feature['attention_mask'] = torch.cat([node_feature['attention_mask'], 
+                                                            torch.zeros((self.max_node_number_sg - num_node, self.max_node_feature_number), 
+                                                                        dtype=node_feature['attention_mask'].dtype)], 
+                                                            dim=0)
+                pad_edge_flag=True
+                node_index_mask = torch.nn.functional.pad(node_index_mask, (0, self.max_node_number_sg-num_node))
+
+            # Convert node feature types
+            node_feature['input_ids'] = node_feature['input_ids'].to(torch.int32)
+            node_feature['attention_mask'] = node_feature['attention_mask'].to(torch.int32)
+           
         else:
             raise('Unrecognized node feature processing method')
             
@@ -607,4 +637,7 @@ class InstructSG():
         else:
             edge_idx_mask = torch.ones_like(edge_index)
             
-        return node_feature, edge_index, edge_idx_mask
+        return {'node_feature':             node_feature,
+            'node_index_mask':          ~node_index_mask.bool(),
+            'edge_index':               edge_index.to(torch.int32),
+            'edge_index_mask':          ~edge_idx_mask.bool()}

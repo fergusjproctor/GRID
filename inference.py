@@ -50,12 +50,13 @@ arg_, config_ = create_parser(type="inference", print_config_flag=True)
 def main():
     config_.batch_size = 4
     config_.preprocessed_language = True
-    config_.dataset_size = 12
+    config_.dataset_size = 4
     #preprocessed_data_path= "preprocess_data"
 
 
     dataset = InstructSG(arg_ ,config_, data_path=data_path, process_node_feature_method='tokenize')
-    samples = dataset.preprocess_text(dataset.robot_graph, dataset.scene_graph, dataset.instruct)
+    dataset._load_data()
+    dataset.preprocess_text(dataset.robot_graph, dataset.scene_graph, dataset.instruct)
     
     print(dataset.action_encoder)
     print(dataset.object_dict)
@@ -77,24 +78,21 @@ def main():
     # create trainer, which we will use only to predict
 
     trainer = pl.Trainer(max_epochs=config_.max_epoch, 
-                            accelerator='gpu', 
-                            devices='auto'
+                            accelerator=arg_.accelerator, 
+                            devices='auto', val_check_interval=1000
                             )
 
-    
     out = trainer.predict(model=model, dataloaders=val_loader, 
                                 ckpt_path=ckpt_path)
-    batch = next(iter(val_loader))
-    out = model.predict_step(batch,0)
-    #out = trainer.predict(model=model, dataloaders=val_loader, ckpt_path=ckpt_path, return_predictions=True)
+    
+    action, object = out[0]
 
+    
 
-           # batch of 32, 10 classes
-
-    act_probs = F.softmax(out[0], dim=1)    # softmax over classes
+    act_probs = F.softmax(action, dim=1)    # softmax over classes
     act_preds = torch.argmax(act_probs, dim=1)  # shape [32], one class per sample
 
-    obj_probs = F.softmax(out[1], dim=1)    # softmax over classes
+    obj_probs = F.softmax(object, dim=1)    # softmax over classes
     obj_preds = torch.argmax(obj_probs, dim=1)  # shape [32], one class per sample
 
     print(act_preds)

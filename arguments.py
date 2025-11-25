@@ -108,7 +108,7 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def parse_gpu_devices(input):
-    if input == 'cpu' or input == 'auto' or input == 'mps' or input == 'cuda':
+    if input == 'cpu' or input == 'auto' or input == 'mps' or input == 'cuda' or input == 'gpu':
         return input
     numbers = input.split(',')
     parsed_numbers = []
@@ -215,7 +215,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
     # ADD SHARED ARGS
     parser.add_argument('--accelerator',
                         metavar='N',
-                        default='auto',
+                        default='gpu',
                         type=str
                         )
     # python arg.py --gpu_devices 0,1
@@ -235,6 +235,7 @@ def create_parser(type='trainer', print_arg_flag=False, print_config_flag=False)
                         type=str,
                         help='The path to the configuration file path')
     # Parse arguments and configurations 
+    print(type)
     if type == 'trainer':
         args, configs = trainer_parser(parser)
     elif type == 'preprocessor':

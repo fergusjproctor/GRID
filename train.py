@@ -191,50 +191,50 @@ class LitGRID(pl.LightningModule):
 
         return action_hat, object_hat
     
-    def on_predict_epoch_end(self):
-        # Gather all predictions
-        all_preds = get_accuracy.collate_dict(self.predict_step_outputs)
+    # def on_predict_epoch_end(self):
+    #     # Gather all predictions
+    #     all_preds = get_accuracy.collate_dict(self.predict_step_outputs)
         
-        # Plot confusion matrix of all predictions 
-        vis.plot_confusion_matrix(
-                parent_directory=save_accuracy_path_, #os.path.dirname(save_accuracy_path_),
-                batch_idx=0,
-                action_id=all_preds["action_id"],
-                action_hat_id=all_preds["action_hat_id"],
-                object_id_excluded=all_preds["object_id_excluded"],
-                object_hat_id_excluded=all_preds["object_hat_id_excluded"],
-            )
+    #     # Plot confusion matrix of all predictions 
+    #     vis.plot_confusion_matrix(
+    #             parent_directory=save_accuracy_path_, #os.path.dirname(save_accuracy_path_),
+    #             batch_idx=0,
+    #             action_id=all_preds["action_id"],
+    #             action_hat_id=all_preds["action_hat_id"],
+    #             object_id_excluded=all_preds["object_id_excluded"],
+    #             object_hat_id_excluded=all_preds["object_hat_id_excluded"],
+    #         )
         
-        # Calculate overall accuracies
-        metric = self.cal_metrices(all_preds['action_hat'], all_preds['object_hat'], all_preds['action'], all_preds['object'], get_all_metrics=True)
+    #     # Calculate overall accuracies
+    #     metric = self.cal_metrices(all_preds['action_hat'], all_preds['object_hat'], all_preds['action'], all_preds['object'], get_all_metrics=True)
         
-        # Save selected metrics to disk
-        save_metric = {"action_acc": metric['action_acc'].item(),
-                       "object_acc": metric['object_acc'].item(),
-                       "tot_err": metric['tot_error_percentage'].item(),
-                       "tot_acc": metric['tot_accuracy_percentage'].item(),
-                       }
-        save_label = {
-            "scene_id":         all_preds['scene_id'].cpu().numpy(),
-            "instr_id":         all_preds['instr_id'].cpu().numpy(),
-            "graph_id":         all_preds['graph_id'].cpu().numpy(),
-            "action_id_pre":    metric['action_id_pre'].cpu().numpy(),
-            "action_id_gt":     metric['action_id_gt'].cpu().numpy(), 
-            # Include all instances of object while
-            # forcing the predicted value of finish action to 0
-            "object_id_origin_pre":  metric['object_id_origin_pre'].cpu().numpy(),
-            "object_id_origin_gt":   metric['object_id_origin_gt'].cpu().numpy(),
-            # Get the labels
-            "object_label":         metric["object_label"].cpu().numpy(),
-            "action_label":         metric["action_label"].cpu().numpy(),
-            "action_label":         metric["action_label"].cpu().numpy(),
-            "label":                metric['label'].cpu().numpy()
-        }
-        get_accuracy.save_excel(os.path.dirname(save_accuracy_path_)+'/sub_task_label.xlsx', save_label)
-        get_accuracy.save_excel(save_accuracy_path_, save_metric)
+    #     # Save selected metrics to disk
+    #     save_metric = {"action_acc": metric['action_acc'].item(),
+    #                    "object_acc": metric['object_acc'].item(),
+    #                    "tot_err": metric['tot_error_percentage'].item(),
+    #                    "tot_acc": metric['tot_accuracy_percentage'].item(),
+    #                    }
+    #     save_label = {
+    #         "scene_id":         all_preds['scene_id'].cpu().numpy(),
+    #         "instr_id":         all_preds['instr_id'].cpu().numpy(),
+    #         "graph_id":         all_preds['graph_id'].cpu().numpy(),
+    #         "action_id_pre":    metric['action_id_pre'].cpu().numpy(),
+    #         "action_id_gt":     metric['action_id_gt'].cpu().numpy(), 
+    #         # Include all instances of object while
+    #         # forcing the predicted value of finish action to 0
+    #         "object_id_origin_pre":  metric['object_id_origin_pre'].cpu().numpy(),
+    #         "object_id_origin_gt":   metric['object_id_origin_gt'].cpu().numpy(),
+    #         # Get the labels
+    #         "object_label":         metric["object_label"].cpu().numpy(),
+    #         "action_label":         metric["action_label"].cpu().numpy(),
+    #         "action_label":         metric["action_label"].cpu().numpy(),
+    #         "label":                metric['label'].cpu().numpy()
+    #     }
+    #     get_accuracy.save_excel(os.path.dirname(save_accuracy_path_)+'/sub_task_label.xlsx', save_label)
+    #     get_accuracy.save_excel(save_accuracy_path_, save_metric)
 
-        # Clear predict_step_outputs to free memory
-        self.predict_step_outputs.clear()
+    #     # Clear predict_step_outputs to free memory
+    #     self.predict_step_outputs.clear()
 
 
     def configure_optimizers(self):
