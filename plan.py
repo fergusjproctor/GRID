@@ -90,6 +90,8 @@ def main():
                                 accelerator=arg_.accelerator, 
                                 devices='auto', val_check_interval=1000
                                 )
+        
+        model.skip_predict_epoch_end = True # tells model not to run accuracy metrics on prediction at end 
 
         out = trainer.predict(model=model, dataloaders=val_loader, 
                                     ckpt_path=ckpt_path)
