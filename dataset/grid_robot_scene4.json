@@ -1,0 +1,38 @@
+{
+    "version": "1.0",
+    "nodes": [
+        {
+            "id": 1,
+            "type": "robot",
+            "attributes": {
+                "label": "character",
+                "color": "",
+                "position": [],
+                "operation": [],
+                "state": ""
+            }
+        },
+        {
+            "id": 111,
+            "type": "room",
+            "attributes": {
+                "label": "kitchen",
+                "color": "",
+                "position": [],
+                "operation": [],
+                "state": ""
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": 0,
+            "type": "in",
+            "source": 1,
+            "target": 111,
+            "attributes": {
+                "label": ""
+            }
+        }
+    ]
+}
