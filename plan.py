@@ -65,11 +65,16 @@ def main():
         rg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.rg.{sub_instr_id}.json'), 'r'))
         instr = instr_json['commands'][instr_id]['high']
 
+        sg_json = json.load(open("dataset/grid_scene_scene4.json", 'r'))
+        rg_json = json.load(open("dataset/grid_robot_scene4.json", 'r'))
+
+        instr = "Please grab a pillow"
+
+        print(instr)
         dataset._load_input_data(rg_json, sg_json, instr)
         dataset.preprocess_text(in_rg=dataset.robot_graph, in_sg=dataset.scene_graph, in_instruct=dataset.instruct)
         
-        print(dataset.action_encoder)
-        print(dataset.object_dict)
+      
         
         #dataset = InstructSG_Dataset(config=config_, data_path=preprocessed_data_path)
 
