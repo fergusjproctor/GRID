@@ -15,8 +15,7 @@ class embedding_generator():
         self.lm = INSTRUCTOR(self.config.text_encoder_type)
         self.batch_size = self.config.batch_size
         self.device = self.arg.gpu_devices
-        # see what device we have
-        print(f"Using device: {self.arg.gpu_devices}")
+     
    
 
         return
@@ -33,7 +32,6 @@ class embedding_generator():
         Returns:
             _type_: _description_
         """        
-        print(self.device)
         for key in input_tokens.keys():
             input_tokens[key] = input_tokens[key].to(self.device)
         return self.lm.encode_tokens(tokens=input_tokens,

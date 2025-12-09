@@ -38,11 +38,32 @@ from dataloader.data_preprocessor import data_preprocessor
 from arguments import create_parser
 
 
+import torch
+
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+def print_gpu_mem(tag=""):
+    if not torch.cuda.is_available():
+        print(f"[{tag}] CUDA not available")
+        return
+    torch.cuda.synchronize(device)
+    allocated = torch.cuda.memory_allocated(device) / 1024**2   # MB
+    reserved  = torch.cuda.memory_reserved(device)  / 1024**2   # MB
+    print(f"[{tag}] allocated: {allocated:.1f} MB, reserved: {reserved:.1f} MB")
 
 
+
+def predictions_to_labels():
+    pass
+
+def predict_next_step():
+    pass
 
 
 def main():
+
+
+
     config_.batch_size = 1
     config_.preprocessed_language = True
     config_.dataset_size = 1
@@ -50,7 +71,9 @@ def main():
 
     data_path = "./dataset/GRID_Dataset-master/Mini_Dataset/data"
     
+    print_gpu_mem("start")
     dataset = InstructSG(arg_ ,config_, data_path=data_path, process_node_feature_method='tokenize')
+    print_gpu_mem("after loading INSTRUCTOR")
 
     while True:
         scene_id = int(input("Scene ID"))
@@ -65,16 +88,28 @@ def main():
         rg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.rg.{sub_instr_id}.json'), 'r'))
         instr = instr_json['commands'][instr_id]['high']
 
-        sg_json = json.load(open("dataset/grid_scene_scene4.json", 'r'))
-        rg_json = json.load(open("dataset/grid_robot_scene4.json", 'r'))
+        # sg_json = json.load(open("dataset/grid_scene_scene4.json", 'r'))
+        # rg_json = json.load(open("dataset/grid_robot_scene4.json", 'r'))
 
-        instr = "Please grab a pillow"
+        # instr = "Please grab a pillow"
 
         print(instr)
-        dataset._load_input_data(rg_json, sg_json, instr)
-        dataset.preprocess_text(in_rg=dataset.robot_graph, in_sg=dataset.scene_graph, in_instruct=dataset.instruct)
         
-      
+        dataset._load_input_data(rg_json, sg_json, instr)
+        # before loading INSTRUCTOR
+        
+        
+
+        # just before encode
+        torch.cuda.reset_peak_memory_stats(device)
+        print_gpu_mem("before INSTRUCTOR encode")
+
+        dataset.preprocess_text(in_rg=dataset.robot_graph, in_sg=dataset.scene_graph, in_instruct=dataset.instruct)
+        print_gpu_mem("after INSTRUCTOR encode")
+        peak_mb = torch.cuda.max_memory_allocated(device) / 1024**2
+        print(f"[INSTRUCTOR] peak memory during encode: {peak_mb:.1f} MB")  
+        
+
         
         #dataset = InstructSG_Dataset(config=config_, data_path=preprocessed_data_path)
 
@@ -86,11 +121,12 @@ def main():
 
         val_loader = DataLoader(val_dataset, batch_size=config_.batch_size, shuffle=False, drop_last=False, num_workers=0)#config_.num_workers)
         ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
-        model = LitGRID(config_)
-
-        model.load_from_checkpoint(ckpt_path, config=config_,map_location=torch.device("cpu"))  # TODO should i change the locaton of device?
+        
+        #model = LitGRID(config_)
+        print_gpu_mem("before loading GRID")
+        model = LitGRID.load_from_checkpoint(ckpt_path, config=config_)#,map_location=torch.device("cpu"))  # TODO should i change the locaton of device?
         # create trainer, which we will use only to predict
-
+        print_gpu_mem("after loading GRID")
         trainer = pl.Trainer(max_epochs=config_.max_epoch, 
                                 accelerator=arg_.accelerator, 
                                 devices='auto', val_check_interval=1000
@@ -98,8 +134,14 @@ def main():
         
         model.skip_predict_epoch_end = True # tells model not to run accuracy metrics on prediction at end 
 
+
+        torch.cuda.reset_peak_memory_stats(device)
+        print_gpu_mem("before trainer.predict")
         out = trainer.predict(model=model, dataloaders=val_loader, 
                                     ckpt_path=ckpt_path)
+        print_gpu_mem("after trainer.predict")
+        peak_mb = torch.cuda.max_memory_allocated(device) / 1024**2
+        print(f"[GRID] peak memory during predict: {peak_mb:.1f} MB")
         
         action, object = out[0]
 

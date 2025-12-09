@@ -18,6 +18,8 @@ from .embedding_generator import embedding_generator
 from .categories import categories as categories_
 from .categories import actions as actions_
 
+
+
 def get_dict(input_list:list)->dict:
     assert isinstance(input_list, list), "input_list must be a list."
     # Assign empty string as the first element
