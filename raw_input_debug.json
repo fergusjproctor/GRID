@@ -1,0 +1,1105 @@
+{
+    "instr": "walk to cereal ",
+    "rg_json": {
+        "nodes": [
+            {
+                "id": 0,
+                "type": "robot",
+                "attributes": {
+                    "color": "",
+                    "label": "character",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "towelrack",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 2,
+                "type": "",
+                "attributes": {
+                    "color": "",
+                    "label": "",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "bathroom",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            }
+        ],
+        "edges": [
+            {
+                "id": 0,
+                "type": "near",
+                "source": 1,
+                "target": 0,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "grasp",
+                "source": 0,
+                "target": 2,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 2,
+                "type": "in",
+                "source": 0,
+                "target": 3,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "in",
+                "source": 1,
+                "target": 3,
+                "attributes": {
+                    "label": ""
+                }
+            }
+        ]
+    },
+    "sg_json": {
+        "nodes": [
+            {
+                "id": 0,
+                "type": "floor",
+                "attributes": {
+                    "color": "",
+                    "label": "",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "livingroom",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 2,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "tvstand",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "clothesshirt",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 4,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "closetdrawer",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 5,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "clothespile",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 6,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "closetdrawer",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 7,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "closetdrawer",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 8,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "clothespile",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 9,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "tablelamp",
+                    "position": [],
+                    "operation": [
+                        "turn_on",
+                        "turn_off"
+                    ],
+                    "state": "on"
+                }
+            },
+            {
+                "id": 10,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "orchid",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 11,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "book",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 12,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "photoframe",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 13,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "waterglass",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 14,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "keyboard",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 15,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "kitchen",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 16,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "kitchencabinet",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 17,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "fridge",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 18,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "toaster",
+                    "position": [],
+                    "operation": [
+                        "turn_on",
+                        "turn_off"
+                    ],
+                    "state": "off"
+                }
+            },
+            {
+                "id": 19,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "breadslice",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 20,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "condimentbottle",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 21,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "plate",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 22,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "mug",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 23,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "folder",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 24,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "pillow",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 25,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "orchid",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 26,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "chocolatesyrup",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 27,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "bedroom",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 28,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "tablelamp",
+                    "position": [],
+                    "operation": [
+                        "turn_on",
+                        "turn_off"
+                    ],
+                    "state": "on"
+                }
+            },
+            {
+                "id": 29,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "rug",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 30,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "pillow",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 31,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "pillow",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 32,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "orchid",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 33,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "clothespile",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 34,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "bathroom",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 35,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "door",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_open"
+                }
+            },
+            {
+                "id": 36,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "hanger",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 37,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "clothesshirt",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 38,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "clothespants",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 39,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "closetdrawer",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 40,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "clothespile",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 41,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "towelrack",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 42,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "toiletpaper",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 43,
+                "type": "large_object",
+                "attributes": {
+                    "color": "",
+                    "label": "hairproduct",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 44,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "waterglass",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 45,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "painkillers",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 46,
+                "type": "small_object",
+                "attributes": {
+                    "color": "",
+                    "label": "towel",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            }
+        ],
+        "edges": [
+            {
+                "id": 0,
+                "type": "in",
+                "source": 0,
+                "target": 1,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "in",
+                "source": 0,
+                "target": 15,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 2,
+                "type": "in",
+                "source": 0,
+                "target": 27,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "in",
+                "source": 0,
+                "target": 34,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 4,
+                "type": "in",
+                "source": 1,
+                "target": 2,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 5,
+                "type": "in",
+                "source": 1,
+                "target": 6,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 6,
+                "type": "in",
+                "source": 1,
+                "target": 7,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 7,
+                "type": "in",
+                "source": 1,
+                "target": 8,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 8,
+                "type": "in",
+                "source": 1,
+                "target": 9,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 9,
+                "type": "in",
+                "source": 1,
+                "target": 10,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 10,
+                "type": "in",
+                "source": 1,
+                "target": 11,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 11,
+                "type": "in",
+                "source": 1,
+                "target": 12,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 12,
+                "type": "in",
+                "source": 1,
+                "target": 13,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 13,
+                "type": "in",
+                "source": 1,
+                "target": 14,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 14,
+                "type": "on",
+                "source": 4,
+                "target": 3,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 15,
+                "type": "on",
+                "source": 7,
+                "target": 4,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 16,
+                "type": "on",
+                "source": 7,
+                "target": 5,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 17,
+                "type": "in",
+                "source": 15,
+                "target": 16,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 18,
+                "type": "in",
+                "source": 15,
+                "target": 17,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 19,
+                "type": "in",
+                "source": 15,
+                "target": 18,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 20,
+                "type": "in",
+                "source": 15,
+                "target": 20,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 21,
+                "type": "in",
+                "source": 15,
+                "target": 21,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 22,
+                "type": "in",
+                "source": 15,
+                "target": 22,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 23,
+                "type": "in",
+                "source": 15,
+                "target": 23,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 24,
+                "type": "in",
+                "source": 15,
+                "target": 24,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 25,
+                "type": "in",
+                "source": 15,
+                "target": 25,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 26,
+                "type": "in",
+                "source": 15,
+                "target": 26,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 27,
+                "type": "in",
+                "source": 18,
+                "target": 19,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 28,
+                "type": "in",
+                "source": 27,
+                "target": 28,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 29,
+                "type": "in",
+                "source": 27,
+                "target": 29,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 30,
+                "type": "in",
+                "source": 27,
+                "target": 30,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 31,
+                "type": "in",
+                "source": 27,
+                "target": 31,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 32,
+                "type": "in",
+                "source": 27,
+                "target": 32,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 33,
+                "type": "in",
+                "source": 27,
+                "target": 33,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 34,
+                "type": "in",
+                "source": 34,
+                "target": 35,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 35,
+                "type": "in",
+                "source": 34,
+                "target": 36,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 36,
+                "type": "in",
+                "source": 34,
+                "target": 37,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 37,
+                "type": "in",
+                "source": 34,
+                "target": 38,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 38,
+                "type": "in",
+                "source": 34,
+                "target": 39,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 39,
+                "type": "in",
+                "source": 34,
+                "target": 40,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 40,
+                "type": "in",
+                "source": 34,
+                "target": 41,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 41,
+                "type": "in",
+                "source": 34,
+                "target": 42,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 42,
+                "type": "in",
+                "source": 34,
+                "target": 43,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 43,
+                "type": "in",
+                "source": 34,
+                "target": 44,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 44,
+                "type": "in",
+                "source": 34,
+                "target": 45,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 45,
+                "type": "in",
+                "source": 34,
+                "target": 46,
+                "attributes": {
+                    "label": ""
+                }
+            }
+        ]
+    }
+}
