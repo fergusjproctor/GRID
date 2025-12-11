@@ -2,25 +2,25 @@
 Script that loads in a sg, preprocesses the data and runs GRID inference on it, refactored from original plan to make as lightweight as possible before tryng to integrate with VH
 """
 
-
-import os
+import sys
 import json
+import os
 
 import torch
 import torch.nn.functional as F
 from torch.utils.data._utils.collate import default_collate
+from flask import Flask, request, jsonify
 
 from dataloader.dataset_wo_pre import InstructSG
 from arguments import create_parser, Config
 from train import LitGRID 
 
-from flask import Flask, request, jsonify
-import sys
+
+
 
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-# Initialize the Flask application
-app = Flask(__name__)
+
 
 def move_to_device(x, device):
     if torch.is_tensor(x):
@@ -58,7 +58,7 @@ def predictions_to_labels(out, raw_input, instructor_model):
 
 
 def load_GRID_model(ckpt_path, config):
-    model = LitGRID.load_from_checkpoint(ckpt_path, config=config_, map_location=DEVICE)
+    model = LitGRID.load_from_checkpoint(ckpt_path, config=config, map_location=DEVICE)
     model.eval()
     return model
 
@@ -66,6 +66,20 @@ def load_GRID_model(ckpt_path, config):
 def load_INSTRUCTOR_model(config_, arg_):
     instructor_model = InstructSG(arg_ ,config_, data_path=None, process_node_feature_method='tokenize')
     return instructor_model
+
+def load_inference():
+    config_ = Config("hparams.cfg")
+
+    arg_, config_ = create_parser(type="inference", print_config_flag=True)
+    config_.batch_size = 1
+    config_.dataset_size = 1
+    
+    instructor_model = load_INSTRUCTOR_model(config_, arg_)
+
+    ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
+    GRID_model = load_GRID_model(ckpt_path, config_)
+
+    return instructor_model, GRID_model
 
 
 @torch.no_grad()
@@ -86,64 +100,7 @@ def run_inference(instructor_model, GRID_model, raw_input):
     return labels
 
 
-
-# This route listens for POST requests at /process
-@app.route('/process', methods=['POST'])
-def process_data():
-    try:
-
-        data = request.json
-        print(f"Received request: {data.get('params', {}).get('instr', 1)}") # Visible in VS Code
-        #scene_id = int(input("Scene ID"))
-        #instr_id = int(input("Instruction ID"))
-        #sub_instr_id = int(input("Step ID"))
-
-
-        # load single I, sg and rg
-        #instruct_file = os.path.join(data_path, f'scene.{scene_id}.instr.json')
-        #instr_json = json.load(open(instruct_file, 'r'))
-        #sg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.sg.{sub_instr_id}.json'), 'r'))
-        #rg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.rg.{sub_instr_id}.json'), 'r'))
-        #instr = instr_json['commands'][instr_id]['high']
-
-
-        # option for using VH created sg and rg 
-        sg_json = data.get('params', {}).get('scene_graph', {})
-        rg_json = data.get('params', {}).get('robot_graph', {})
-        instr = data.get('params', {}).get('instr', 1)
-
-        # sg_json = json.load(open("dataset/grid_scene_scene4.json", 'r'))
-        # rg_json = json.load(open("dataset/grid_robot_scene4.json", 'r'))
-        # instr = "Please grab a pillow"
-
-
-        raw_input = {"instr": instr, "rg_json": rg_json, "sg_json": sg_json}
-
-        # save the raw input for debugging
-        with open("raw_input_debug.json", 'w') as f:
-            json.dump(raw_input, f, indent=4)
-
-
-        action, object, object_id = run_inference(instructor_model, GRID_model, raw_input)
-        print(f"{action} {object} {object_id}")
-        response = {
-            "status": "success",
-            "result": {
-                "action": f"{action}",
-                "object": f"{object}",
-              "object_id": f"{object_id}"
-              }
-        }
-        return jsonify(response)
-
-    except Exception as e:
-        print(f" Error occurred: {e}", file=sys.stderr)
-        return jsonify({"status": "error", "message": str(e)}), 500
-        
-
-
-if __name__ == "__main__":
-
+def main():
     config_ = Config("hparams.cfg")
 
     arg_, config_ = create_parser(type="inference", print_config_flag=True)
@@ -153,11 +110,40 @@ if __name__ == "__main__":
 
     
     data_path = "./dataset/GRID_Dataset-master/Mini_Dataset/data"
+
+
+    instructor_model, GRID_model = load_inference()
+
+
+    while True:
+        # user input option 
+        scene_id = int(input("Scene ID"))
+        instr_id = int(input("Instruction ID"))
+        sub_instr_id = int(input("Step ID"))
+
+
+        # load single I, sg and rg
+        instruct_file = os.path.join(data_path, f'scene.{scene_id}.instr.json')
+        instr_json = json.load(open(instruct_file, 'r'))
+        sg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.sg.{sub_instr_id}.json'), 'r'))
+        rg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.rg.{sub_instr_id}.json'), 'r'))
+        instr = instr_json['commands'][instr_id]['high']
+
+
+        # Fixed option for debugging
+        # sg_json = json.load(open("dataset/grid_scene_scene4.json", 'r'))
+        # rg_json = json.load(open("dataset/grid_robot_scene4.json", 'r'))
+        # instr = "Please grab a pillow"
+
+
+        raw_input = {"instr": instr, "rg_json": rg_json, "sg_json": sg_json}
+        action, object, object_id = run_inference(instructor_model, GRID_model, raw_input)
+
+        print(f"Predicted action: {action}, object: {object}, object id: {object_id}")
+        
+
+
+if __name__ == "__main__":
+    main()
+
     
-    instructor_model = load_INSTRUCTOR_model(config_, arg_)
-
-    ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
-    GRID_model = load_GRID_model(ckpt_path, config_)
-
-    print(" Server is running on Ubuntu. Waiting for requests...", flush=True)
-    app.run(host='127.0.0.1', port=5000)
