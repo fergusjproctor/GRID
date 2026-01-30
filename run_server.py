@@ -37,8 +37,8 @@ def process_data():
             "status": "success",
             "result": {
                 "action": f"{action}",
-                "object": f"{object}",
-              "object_id": f"{object_id}"
+                "object_label": f"{object}",
+              "grid_object_id": f"{object_id}"
               }
         }
         return jsonify(response)
