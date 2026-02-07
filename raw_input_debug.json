@@ -1,0 +1,1166 @@
+{
+    "instr": "Grab the glass from the bathroom and place it somewhere sensible in the living room.",
+    "rg_json": {
+        "nodes": [
+            {
+                "id": 0,
+                "type": "robot",
+                "attributes": {
+                    "color": "",
+                    "label": "character",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "cabinet",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 2,
+                "type": "",
+                "attributes": {
+                    "color": "",
+                    "label": "",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "bedroom",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            }
+        ],
+        "edges": [
+            {
+                "id": 0,
+                "type": "near",
+                "source": 1,
+                "target": 0,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "grasp",
+                "source": 0,
+                "target": 2,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 2,
+                "type": "in",
+                "source": 0,
+                "target": 3,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "in",
+                "source": 1,
+                "target": 3,
+                "attributes": {
+                    "label": ""
+                }
+            }
+        ]
+    },
+    "sg_json": {
+        "nodes": [
+            {
+                "id": 0,
+                "type": "floor",
+                "attributes": {
+                    "color": "",
+                    "label": "",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "living room",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 2,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "sofa",
+                    "position": [],
+                    "operation": [
+                        "place_to"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "desk",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 4,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "tv stand",
+                    "position": [],
+                    "operation": [
+                        "place_to"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 5,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "nightstand",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 6,
+                "type": "small_object",
+                "attributes": {
+                    "color": "purple",
+                    "label": "orchid",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 7,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "pillow",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 8,
+                "type": "small_object",
+                "attributes": {
+                    "color": "pink",
+                    "label": "cupcake",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 9,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "plate",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 10,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "plate",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 11,
+                "type": "small_object",
+                "attributes": {
+                    "color": "gray",
+                    "label": "mouse",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 12,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "kitchen",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 13,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "kitchen cabinet",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 14,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "kitchen cabinet",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 15,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "stove fan",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 16,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "stove",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 17,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "fridge",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open",
+                        "place_to"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 18,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "washing sponge",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 19,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "deodorant",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 20,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "condiment bottle",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 21,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "dish bowl",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 22,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "minced meat",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 23,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "chocolate syrup",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 24,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "bedroom",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 25,
+                "type": "small_object",
+                "attributes": {
+                    "color": "purple",
+                    "label": "orchid",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 26,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "book",
+                    "position": [],
+                    "operation": [
+                        "pick",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 27,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "photo frame",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 28,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "nightstand",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 29,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "cabinet",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 30,
+                "type": "room",
+                "attributes": {
+                    "color": "",
+                    "label": "bathroom",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 31,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "bathroom counter",
+                    "position": [],
+                    "operation": [
+                        "place_to"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 32,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "closet",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open",
+                        "place_to"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 33,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "hanger",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 34,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "closet drawer",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            },
+            {
+                "id": 35,
+                "type": "large_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "closet",
+                    "position": [],
+                    "operation": [
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open",
+                        "place_to"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 36,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "clothes pants",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 37,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "clothes shirt",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 38,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "hanger",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 39,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "clothes pile",
+                    "position": [],
+                    "operation": [
+                        "pick",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open",
+                        "place_to"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 40,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "washing sponge",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 41,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "hair product",
+                    "position": [],
+                    "operation": [
+                        "pick",
+                        "revolute_open",
+                        "revolute_close",
+                        "longitudinal_open"
+                    ],
+                    "state": "revolute_close"
+                }
+            },
+            {
+                "id": 42,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "slippers",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 43,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "water glass",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 44,
+                "type": "small_object",
+                "attributes": {
+                    "color": "white",
+                    "label": "bar soap",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 45,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "towel",
+                    "position": [],
+                    "operation": [
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 46,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "rug",
+                    "position": [],
+                    "operation": [
+                        "place_to",
+                        "pick"
+                    ],
+                    "state": ""
+                }
+            },
+            {
+                "id": 47,
+                "type": "small_object",
+                "attributes": {
+                    "color": "brown",
+                    "label": "power socket",
+                    "position": [],
+                    "operation": [],
+                    "state": ""
+                }
+            }
+        ],
+        "edges": [
+            {
+                "id": 0,
+                "type": "in",
+                "source": 0,
+                "target": 1,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 1,
+                "type": "in",
+                "source": 0,
+                "target": 12,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 2,
+                "type": "in",
+                "source": 0,
+                "target": 24,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 3,
+                "type": "in",
+                "source": 0,
+                "target": 30,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 4,
+                "type": "in",
+                "source": 1,
+                "target": 2,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 5,
+                "type": "in",
+                "source": 1,
+                "target": 3,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 6,
+                "type": "in",
+                "source": 1,
+                "target": 4,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 7,
+                "type": "in",
+                "source": 1,
+                "target": 5,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 8,
+                "type": "in",
+                "source": 1,
+                "target": 10,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 9,
+                "type": "in",
+                "source": 2,
+                "target": 7,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 10,
+                "type": "in",
+                "source": 3,
+                "target": 8,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 11,
+                "type": "in",
+                "source": 3,
+                "target": 9,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 12,
+                "type": "in",
+                "source": 3,
+                "target": 11,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 13,
+                "type": "in",
+                "source": 5,
+                "target": 6,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 14,
+                "type": "in",
+                "source": 12,
+                "target": 13,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 15,
+                "type": "in",
+                "source": 12,
+                "target": 14,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 16,
+                "type": "in",
+                "source": 12,
+                "target": 15,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 17,
+                "type": "in",
+                "source": 12,
+                "target": 16,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 18,
+                "type": "in",
+                "source": 12,
+                "target": 17,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 19,
+                "type": "in",
+                "source": 12,
+                "target": 18,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 20,
+                "type": "in",
+                "source": 12,
+                "target": 19,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 21,
+                "type": "in",
+                "source": 12,
+                "target": 20,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 22,
+                "type": "in",
+                "source": 12,
+                "target": 21,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 23,
+                "type": "in",
+                "source": 12,
+                "target": 22,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 24,
+                "type": "in",
+                "source": 12,
+                "target": 23,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 25,
+                "type": "in",
+                "source": 24,
+                "target": 25,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 26,
+                "type": "in",
+                "source": 24,
+                "target": 26,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 27,
+                "type": "in",
+                "source": 24,
+                "target": 27,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 28,
+                "type": "in",
+                "source": 24,
+                "target": 28,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 29,
+                "type": "in",
+                "source": 24,
+                "target": 29,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 30,
+                "type": "in",
+                "source": 30,
+                "target": 31,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 31,
+                "type": "in",
+                "source": 30,
+                "target": 32,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 32,
+                "type": "in",
+                "source": 30,
+                "target": 35,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 33,
+                "type": "in",
+                "source": 30,
+                "target": 40,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 34,
+                "type": "in",
+                "source": 30,
+                "target": 41,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 35,
+                "type": "in",
+                "source": 30,
+                "target": 42,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 36,
+                "type": "in",
+                "source": 30,
+                "target": 45,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 37,
+                "type": "in",
+                "source": 30,
+                "target": 46,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 38,
+                "type": "in",
+                "source": 30,
+                "target": 47,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 39,
+                "type": "in",
+                "source": 31,
+                "target": 43,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 40,
+                "type": "in",
+                "source": 31,
+                "target": 44,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 41,
+                "type": "in",
+                "source": 32,
+                "target": 33,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 42,
+                "type": "in",
+                "source": 32,
+                "target": 34,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 43,
+                "type": "in",
+                "source": 35,
+                "target": 37,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 44,
+                "type": "in",
+                "source": 35,
+                "target": 39,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 45,
+                "type": "in",
+                "source": 35,
+                "target": 36,
+                "attributes": {
+                    "label": ""
+                }
+            },
+            {
+                "id": 46,
+                "type": "in",
+                "source": 35,
+                "target": 38,
+                "attributes": {
+                    "label": ""
+                }
+            }
+        ]
+    }
+}

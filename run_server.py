@@ -3,6 +3,7 @@ Script that loads in a sg, preprocesses the data and runs GRID inference on it, 
 """
 
 import sys
+import json
 
 from flask import Flask, request, jsonify
 
@@ -27,8 +28,8 @@ def process_data():
         raw_input = {"instr": instr, "rg_json": rg_json, "sg_json": sg_json}
 
         # save the raw input for debugging
-        # with open("raw_input_debug.json", 'w') as f:
-        #     json.dump(raw_input, f, indent=4)
+        with open("raw_input_debug.json", 'w') as f:
+            json.dump(raw_input, f, indent=4)
 
 
         action, object, object_id = run_inference(instructor_model, GRID_model, raw_input)

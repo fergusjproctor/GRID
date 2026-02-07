@@ -410,7 +410,7 @@ def main():
     # Create Trainer
     trainer = pl.Trainer(max_epochs=config_.max_epoch, 
                         accelerator=args_.accelerator, 
-                        devices=args_.gpu_devices, 
+                        devices="auto",#args_.gpu_devices, 
                         logger=logger, 
                         callbacks=[lr_monitor, ckpt_callback]
                         #strategy='ddp_find_unused_parameters_true'
