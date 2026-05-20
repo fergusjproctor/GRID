@@ -123,7 +123,7 @@ def preprocessor_parser(parser):
     # ADD ARGS IF YOU WISH
     parser.add_argument('--preprocessed_data_path', 
                     type=str, 
-                    default='preprocess_data',
+                    default='preprocess_data_test',
                     help='The output path of the pre-processed dataset')
     # Parse arguments
     args = parser.parse_args()
@@ -149,7 +149,7 @@ def trainer_parser(parser):
     # ADD ARGS IF YOU WISH
     parser.add_argument('--preprocessed_data_path', 
                         type=str, 
-                        default='preprocess_data',
+                        default='preprocess_data_test',
                         help='The path of the pre-processed dataset')
     parser.add_argument('--fit_flag',
                         default=True,

@@ -18,7 +18,7 @@
                 "type": "large_object",
                 "attributes": {
                     "color": "brown",
-                    "label": "cabinet",
+                    "label": "nightstand",
                     "position": [],
                     "operation": [
                         "place_to",
@@ -45,7 +45,7 @@
                 "type": "room",
                 "attributes": {
                     "color": "",
-                    "label": "bedroom",
+                    "label": "living room",
                     "position": [],
                     "operation": [],
                     "state": ""

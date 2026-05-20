@@ -84,13 +84,14 @@ target/
 *.code-workspace/
 
 
-# *.h5
-# .pt
-# .pth
-#dataset/
-#logs/
-# lightning_logs/
-# ckpt/
-# USE/
-# preprocess_data/
-# .ckpt
+*.h5
+.pt
+.pth
+dataset/
+logs/
+lightning_logs/
+ckpt/
+USE/
+preprocess_data/
+.ckpt
+preprocess_data_test/

@@ -71,7 +71,7 @@ class data_preprocessor():
 
         # Generate file name for hdf5 file
         if self.save_type == 'hdf5':
-            self.save_filename = 'preprocessed_data'
+            self.save_filename = 'preprocessed_data_test'
             # Creates a unique file name in output directory and open the file
             self.makefile(self.save_filename)
        
@@ -422,7 +422,11 @@ class data_preprocessor():
                     logger.debug(sample['raw_data_path'])
                     logger.debug(f"encoded_action_id: {self.action_encoder.inverse_transform(sample['output']['encoded_action'])}")
                     logger.debug(f"encoded_object_id: {self.object_id_encoder.inverse_transform(sample['output']['encoded_object_id'])}")
-                    self.save(sample, compress=self.save_compress_flag)
+                    try:
+
+                        self.save(sample, compress=self.save_compress_flag)
+                    except RuntimeError as e:
+                        print(f"Error {e} during saving")
             
 
     def __get_item__(self, class_idx, current_idx=None, robot_graph_emb=None, scene_graph_emb=None, instruct_emb=None, predict_mode:bool=False) -> dict:
@@ -803,7 +807,7 @@ class data_preprocessor():
 
         Args:
             output_dir (str): The directory to hold output files
-        """        
+        """
         try:
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)

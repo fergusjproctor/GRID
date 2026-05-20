@@ -76,7 +76,7 @@ def load_inference():
     
     instructor_model = load_INSTRUCTOR_model(config_, arg_)
 
-    ckpt_path = "logs/test/version_21/checkpoints/epoch=551.ckpt"
+    ckpt_path = "logs/test/version_9/checkpoints/epoch=689.ckpt"
     GRID_model = load_GRID_model(ckpt_path, config_)
 
     return instructor_model, GRID_model
@@ -109,7 +109,7 @@ def main():
     config_.dataset_size = 1
 
     
-    data_path = "./dataset/GRID_Dataset-master/Mini_Dataset/data"
+    data_path = "./dataset/test_dataset_2"
 
 
     instructor_model, GRID_model = load_inference()
@@ -128,6 +128,8 @@ def main():
         sg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.sg.{sub_instr_id}.json'), 'r'))
         rg_json = json.load(open(os.path.join(data_path, f'scene.{scene_id}.graphs', f'scene.{scene_id}.instr.{instr_id}.rg.{sub_instr_id}.json'), 'r'))
         instr = instr_json['commands'][instr_id]['high']
+
+        print(instr)
 
 
         # Fixed option for debugging
